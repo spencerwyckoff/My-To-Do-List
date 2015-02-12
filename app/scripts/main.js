@@ -56,21 +56,26 @@ $('#submit').on('click', function(e) {
 //create a new task object and push to array
 	var newTask = new Task (getTask, getDate);
 	addNewTask(newTask);
-
+	console.log(newTask);
 //display array in HTML
 	// var newTasksHTML = template(newTasks);
 	// newTaskArea.html(newTasksHTML);
 });
 
-
-//CHECKBOX
-$('.newTasksContainer').on('click', 'li', function(event) {
+//CHECKBOX on click, toggle status
+$('.newTasksList').on('click','li', function(event) {
 //change task status to Completed
 	event.preventDefault();	
+	var thisTask = event.target;
+	var thisTaskID = Number(thisTask.id);
+	console.log(thisTaskID);
 
-	var thisNewTask = event.target;
-	console.log(thisNewTask);
+	var thisTaskInstance = _.findWhere(newTasks.task, { id: thisTaskID });
 
+	thisTaskInstance.toggleStatus();
+	console.log(thisTaskInstance);
+
+	$(thisTask).removeClass().addClass(thisTaskInstance.status);	
 });
 
 

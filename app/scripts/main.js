@@ -66,7 +66,7 @@ $('#submit').on('click', function(e) {
 //add the new Task Model to the Task Collection
 	allTasks.add(newTask);
 //display array in HTML
-	var newTasksHTML = template(newTasks);
+	var newTaskHTML = template(allTasks);
 	newTaskArea.html(newTasksHTML);
 });
 

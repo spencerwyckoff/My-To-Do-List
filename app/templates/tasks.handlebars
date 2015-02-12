@@ -1,0 +1,10 @@
+{{#each task}}
+	<li id="<%= id %>" class="<%= status %>">
+	  <div class="taskContainer">
+	    <span class="theTask">{{name}}</span>
+	    <span class="smallDate">{{dueDate}}</span>
+	  </div>
+	  <div class="completeButton">
+	  </div>
+	</li>
+{{/each}}

@@ -7,20 +7,76 @@ body {
   background: #fafafa;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #333;
+  padding: 5%;
+  min-width: 320px;
 }
 
-.hero-unit {
-  margin: 50px auto 0 auto;
-  width: 600px;
-  font-size: 18px;
-  font-weight: 200;
-  line-height: 30px;
-  background-color: #eee;
-  border-radius: 6px;
-  padding: 60px;
-  h1 {
-    font-size: 60px;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
+.newInput {
+  margin: 0px auto;
+  width: 80%;
+  text-align: center;
 }
+
+#newTaskInput {
+  margin: 3%;
+  min-height: 40px;
+  padding: 2%;
+  width: 100%;
+}
+
+#dueDateInput {
+  // margin: 5%;
+  min-height: 40px;
+  padding: 2%;
+  min-width: 80px;
+  text-align: center;
+}
+
+button {
+  margin: 5%;
+  width: 175px;
+  height: 35px;
+}
+
+ul {
+  list-style: none;
+}
+
+li {
+  margin: 1% 0px;  
+  overflow: auto; 
+  padding: 1%;
+  background: white;
+  border: 1px solid silver;
+  border-radius: 5px;
+  width: 80%;
+
+  .taskContainer {
+    float: left;
+    .theTask {
+      display: block;
+      font-size: 18px;
+    }
+    .smallDate {
+      display: inline-block;
+      color: lightgrey;
+      font-size: 14px;
+      margin: 5px 0px 0px 0px;
+    }
+  }
+
+  .completeButton {
+    float: right;
+    width: 40px;
+    height: 40px;
+    background: aquamarine;
+    border-radius: 5px;
+    display: inline-block;
+
+    &:hover {
+      border: 2px solid cadetblue;
+      cursor: pointer;
+    }
+  }  
+}
+

@@ -20,28 +20,53 @@
   </head>
   <body>
 
-    <div class="hero-unit">
-      <h1>'Allo, 'Allo!</h1>
-      <p>You now have</p>
-      <ul>
-        <li>HTML5 Boilerplate</li>
-        <li>Normalize CSS</li>
-        <li>Sass</li>
+    <form class="newInput">
+      <input class="input" id="newTaskInput" type="text" placeholder="Enter a New Task"/>
+      <input class="input" id="dueDateInput" type="date" placeholder="Due Date"/>
+      <button id="submit">Submit</button>
+    </form>
 
-        <li>Bourbon & Neat</li>
-        <li>UnderscoreJS</li>
+    <section class="newTasksContainer">
+    <h4>New Tasks</h4>
+      <ul class="newTasksList">
+        
       </ul>
-      <p>Don't forget to update your readme file!!</p>
-    </div>
+    </section>
+
+
+    <section class="completedTasksContainer">
+    <h4>Completed Tasks</h4>
+      <ul class="completedTasksList">
+        <li>
+          <span>Completed Task 1</span>
+          <div class="completeButton"></div>
+        </li>
+      
+      </ul>
+    </section>
+    </section>
+
+
+    <script type="text/template" id="taskTemp">
+      <li id="<%= id %>" class="<%= status %>">
+          <div class="taskContainer">
+            <span class="theTask"><%= name %></span>
+            <span class="smallDate"><%= dueDate %></span>
+          </div>
+          <div class="completeButton"></div>
+        </li>
+    </script>
 
     <!-- build:js scripts/vendor.js -->
     <!-- bower:js -->
     <script src="../bower_components/jquery/dist/jquery.js"></script>
     <script src="../bower_components/underscore/underscore.js"></script>
+    <script src="../bower_components/handlebars/handlebars.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
         <!-- build:js scripts/main.js -->
+        <script src="scripts/templates.js"></script>
         <script src="scripts/main.js"></script>
         <!-- endbuild -->
 </body>

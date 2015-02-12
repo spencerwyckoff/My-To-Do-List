@@ -9,12 +9,12 @@ var task;
     describe('Creating a New Task', function () {
     	
     	beforeEach( function() {
-	  		task = new Task();
+	   		task = new Task();
 	  	});
 
-      it('should be an instance of Task', function () {
-      	expect(task).to.be.an.instanceof(Task);
-      });
+      // it('should be an instance of Task', function () {
+      // 	expect(task).to.be.an.instanceof(Task);
+      // });
 
       it('should have a name', function () {
       	expect(task.name).to.equal(this.name);

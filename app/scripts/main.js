@@ -1,65 +1,76 @@
-//DECLARE VARIABLES
-var newTasks = {
-	task: []
-};
-var newTaskArea = $('.newTasksList');
-var completedTaskArea = $('.completedTaskList');
-var newTaskInput = $('#newTaskInput');
-var newDateInput = $('#dueDateInput');
+//Variables
+var grabName = $('#newTaskInput');
+var grabDate = $('#dueDateInput');
 
-var taskTemplate = $('#taskTemp').html();
-var taskTemplateFunc = _.template(taskTemplate);
+//Create Task Model in Backbone
+var Task = Backbone.Model.extend({
 
+	initialize: function() {
 
-//TASK CONSTRUCTOR
-var Task = function(name, dueDate) {
-	this.name = name;
-	this.dueDate = dueDate || "no due date";
-	this.id = _.random(0, 10000);
-	
-	this.changeDueDate = function(date) {
-		this.dueDate = date;
-	};
+		var name = this.get('name');
+		var dueDate = this.get('dueDate');
+		console.log(name + ' is a new task');
+		console.log(dueDate + ' is the due date');
 
-	this.status = 'open';
+	},
 
-	this.toggleStatus = function() {
-		if (this.status === 'open') {
-			this.status = 'completed'; 
+	idAttribute: '_id',
+
+	defaults: {
+		name: '',
+		dueDate: '',
+		status: 'open'
+	},
+
+	toggleStatus: function () {
+		if (this.attributes.status === 'open') {
+			this.attributes.status = 'completed';
 		} else {
-			this.status = 'open';
+			this.attributes.status = 'open';
 		}
-	};
+	}
 
-};
+});
 
-//HANDLEBARS TEMPLATE - New Tasks
-	// var template = Handlebars.templates.tasks;
-	// var newTasksHTML = template(newTasks);
-	// $('.newTasksList').html(newTasksHTML);
+//Create Task Collection in Backbone
+var TaskCollection = Backbone.Collection.extend({
 
-//ADD A NEW TASK
- var addNewTask = function (task) {
-    newTasks.task.push(task);
-    newTaskArea.append(taskTemplateFunc(task));
-  };
+	initialize: function() {
+		console.log('The task collection was created');
+	},
+
+	model: Task
+
+});
+
+//Instances
+var allTasks = new TaskCollection(); 
+// //Add a new Task
+//  var addNewTask = function (task) {
+//     newTasks.task.push(task);
+//     newTaskArea.append(taskTemplateFunc(task));
+//   };
 
 //SUBMIT BUTTON
 $('#submit').on('click', function(e) {
 	e.preventDefault();	
 //grab values from fields
-	var getTask = newTaskInput.val();
-	var getDate = newDateInput.val();
+	var getName = grabName.val();
+	var getDate = grabDate.val();
 //reset fields to blank
-	newTaskInput.val('');
-	newDateInput.val('');
-//create a new task object and push to array
-	var newTask = new Task (getTask, getDate);
-	addNewTask(newTask);
+	grabName.val('');
+	grabDate.val('');
+//create a new Task Model and store name & date values
+	var newTask = new Task ({name: getName, dueDate: getDate});
+	console.log(newTask);
+//add the new Task Model to the Task Collection
+	allTasks.add(newTask);
 //display array in HTML
-	// var newTasksHTML = template(newTasks);
-	// newTaskArea.html(newTasksHTML);
+	var newTasksHTML = template(newTasks);
+	newTaskArea.html(newTasksHTML);
 });
+
+
 
 //TOGGLE COMPLETE
 $('.newTasksList').on('click','li', function(event) {
@@ -79,7 +90,7 @@ $('.newTasksList').on('click','li', function(event) {
 });
 
 //TOGGLE NEW 
-$('.completedTasksList').on('click','li', function(event) {
+$('.completedTasksList').on('click','li div', function(event) {
 //change task status to Completed
 	event.preventDefault();	
 	var thisTask = event.target;
@@ -95,17 +106,6 @@ $('.completedTasksList').on('click','li', function(event) {
 	var appendCompletedTask = $('.newTasksList').append(detachCompletedTask);
 
 });
-
-
-
-
-//DELETE
-
-var deleteButton = $('div.deleteButton').css('color','yellow');
-console.log(deleteButton);
-
-
-
 
 
 

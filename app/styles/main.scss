@@ -9,12 +9,16 @@ body {
   color: #333;
   padding: 5%;
   min-width: 320px;
+  border-radius: 5px;
+
 }
 
 .newInput {
   margin: 0px auto;
   width: 80%;
   text-align: center;
+  padding: 1%;
+  width: 80%;
 }
 
 #newTaskInput {
@@ -38,18 +42,29 @@ button {
   height: 35px;
 }
 
+.newTasksContainer h4 {
+  font-size: 30px;
+  margin: 2% auto;
+  color: DarkGreen;
+}
+
 ul {
   list-style: none;
 }
 
-li {
+.open {
   margin: 1% 0px;  
   overflow: auto; 
   padding: 1%;
   background: white;
-  border: 1px solid silver;
+  border: 2px solid DarkGreen;
   border-radius: 5px;
   width: 80%;
+
+  &:hover {
+    background: AliceBlue;
+    cursor: pointer;
+  }
 
   .taskContainer {
     float: left;
@@ -65,34 +80,84 @@ li {
     }
   }
 
-  .completeButton {
+  .deleteButton {
     float: right;
     width: 40px;
     height: 40px;
-    background: aquamarine;
+    background: transparent;
     border-radius: 5px;
     display: inline-block;
+    text-align: center; 
+    padding: 1px;    
 
     &:hover {
-      border: 2px solid cadetblue;
       cursor: pointer;
+    }
+    span {
+      font-size: 30px;
+      color: black;
+      &:hover {
+        color: red;
+      }
     }
   }  
 }
 
+.completedTasksContainer h4 {
+  font-size: 30px;
+  margin: 2% auto;
+  color: silver;
+}
+
 .completed {
-  .completeButton {
+  margin: 1% 0px;  
+  overflow: auto; 
+  padding: 1%;
+  background: white;
+  border: 2px solid silver;
+  border-radius: 5px;
+  width: 80%;
+
+  &:hover {
+    background: AliceBlue;
+    cursor: pointer;
+  }
+
+  .taskContainer {
+    float: left;
+    .theTask {
+      display: block;
+      font-size: 18px;
+      text-decoration: line-through;
+
+    }
+    .smallDate {
+      display: inline-block;
+      color: lightgrey;
+      font-size: 14px;
+      margin: 5px 0px 0px 0px;
+    }
+  }
+
+  .deleteButton {
     float: right;
     width: 40px;
     height: 40px;
-    background: red;
     border-radius: 5px;
     display: inline-block;
+    text-align: center; 
+    padding: 1px;    
 
     &:hover {
-      border: 2px solid cadetblue;
       cursor: pointer;
     }
-  }  
+    span {
+      font-size: 30px;
+       color: black;
+      &:hover {
+        color: red;
+      }
+    }
+  }
 }
 

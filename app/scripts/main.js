@@ -56,27 +56,54 @@ $('#submit').on('click', function(e) {
 //create a new task object and push to array
 	var newTask = new Task (getTask, getDate);
 	addNewTask(newTask);
-	console.log(newTask);
 //display array in HTML
 	// var newTasksHTML = template(newTasks);
 	// newTaskArea.html(newTasksHTML);
 });
 
-//CHECKBOX on click, toggle status
+//TOGGLE COMPLETE
 $('.newTasksList').on('click','li', function(event) {
 //change task status to Completed
 	event.preventDefault();	
 	var thisTask = event.target;
 	var thisTaskID = Number(thisTask.id);
-	console.log(thisTaskID);
 
 	var thisTaskInstance = _.findWhere(newTasks.task, { id: thisTaskID });
 
 	thisTaskInstance.toggleStatus();
-	console.log(thisTaskInstance);
 
-	$(thisTask).removeClass().addClass(thisTaskInstance.status);	
+	$(thisTask).removeClass().addClass(thisTaskInstance.status);
+
+	var detachNewTask = $(thisTask).detach();
+	var appendCompletedTask = $('.completedTasksList').append(detachNewTask);
 });
+
+//TOGGLE NEW 
+$('.completedTasksList').on('click','li', function(event) {
+//change task status to Completed
+	event.preventDefault();	
+	var thisTask = event.target;
+	var thisTaskID = Number(thisTask.id);
+
+	var thisTaskInstance = _.findWhere(newTasks.task, { id: thisTaskID });
+
+	thisTaskInstance.toggleStatus();
+
+	$(thisTask).removeClass().addClass(thisTaskInstance.status);
+
+	var detachCompletedTask = $(thisTask).detach();
+	var appendCompletedTask = $('.newTasksList').append(detachCompletedTask);
+
+});
+
+
+
+
+//DELETE
+
+var deleteButton = $('div.deleteButton').css('color','yellow');
+console.log(deleteButton);
+
 
 
 

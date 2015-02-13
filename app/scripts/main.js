@@ -39,17 +39,43 @@ var TaskCollection = Backbone.Collection.extend({
 		console.log('The task collection was created');
 	},
 
-	model: Task
+	model: Task,
+
+	url: 'https://tiy-atl-fe-server.herokuapp.com/collections/sw-to-do-list'
 
 });
 
 //Instances
 var allTasks = new TaskCollection(); 
-// //Add a new Task
-//  var addNewTask = function (task) {
-//     newTasks.task.push(task);
-//     newTaskArea.append(taskTemplateFunc(task));
-//   };
+
+/*
+1. Page loads
+2. Data is pulled down
+3. Loop over data
+4. Send data to DOM
+*/
+
+
+// Fetch the data
+// Wait for complete (think .done() )
+// Inside of the done - Loop over the array (allTasks.each)
+// send the single item.attributes to the template
+
+
+allTask.each( function (a) {
+
+	// each item will be represented by 'a' so to access the object
+	// use a.attributes
+
+	var templateTaskHTML = templateTask(a.attributes);
+
+});
+
+
+//Handlebars Template
+var templateTask = Handlebars.templates.task;
+var templateTaskHTML = templateTask(allTasks);
+var addTemplateHTML = $('.newTasksList').html(templateTaskHTML);
 
 //SUBMIT BUTTON
 $('#submit').on('click', function(e) {
@@ -65,9 +91,15 @@ $('#submit').on('click', function(e) {
 	console.log(newTask);
 //add the new Task Model to the Task Collection
 	allTasks.add(newTask);
+//add the new Task Collection HTML to the page
+	addTemplateHTML();
+//save newTask to server URL
+	newTask.save().done( function () {
+		console.log('Task was saved to the server.');
+	});
 //display array in HTML
-	var newTaskHTML = template(allTasks);
-	newTaskArea.html(newTasksHTML);
+	// var newTaskHTML = template(allTasks);
+	// newTaskArea.html(newTasksHTML);
 });
 
 

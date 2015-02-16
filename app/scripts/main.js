@@ -9,8 +9,6 @@ var Task = Backbone.Model.extend({
 
 		var name = this.get('name');
 		var dueDate = this.get('dueDate');
-		console.log(name + ' is a new task');
-		console.log(dueDate + ' is the due date');
 
 	},
 
@@ -36,7 +34,6 @@ var Task = Backbone.Model.extend({
 var TaskCollection = Backbone.Collection.extend({
 
 	initialize: function() {
-		console.log('The task collection was created');
 	},
 
 	model: Task,
@@ -48,34 +45,20 @@ var TaskCollection = Backbone.Collection.extend({
 //Instances
 var allTasks = new TaskCollection(); 
 
-/*
-1. Page loads
-2. Data is pulled down
-3. Loop over data
-4. Send data to DOM
-*/
+//Handlebars Template
+var newTemplateTask = Handlebars.templates.newTask;
 
+//PAGE LOAD - Pull Existing Tasks and Add to DOM
+var pageLoad = allTasks.fetch().done( function() {
+	console.log('Tasks have been fetched.');
 
-// Fetch the data
-// Wait for complete (think .done() )
-// Inside of the done - Loop over the array (allTasks.each)
-// send the single item.attributes to the template
-
-
-allTask.each( function (a) {
-
-	// each item will be represented by 'a' so to access the object
-	// use a.attributes
-
-	var templateTaskHTML = templateTask(a.attributes);
+	allTasks.each( function(a) {
+		var templateTaskHTML = newTemplateTask(a.attributes);
+		$('.newTasksList').append(templateTaskHTML);
+	});	
 
 });
 
-
-//Handlebars Template
-var templateTask = Handlebars.templates.task;
-var templateTaskHTML = templateTask(allTasks);
-var addTemplateHTML = $('.newTasksList').html(templateTaskHTML);
 
 //SUBMIT BUTTON
 $('#submit').on('click', function(e) {
@@ -88,55 +71,54 @@ $('#submit').on('click', function(e) {
 	grabDate.val('');
 //create a new Task Model and store name & date values
 	var newTask = new Task ({name: getName, dueDate: getDate});
-	console.log(newTask);
 //add the new Task Model to the Task Collection
 	allTasks.add(newTask);
 //add the new Task Collection HTML to the page
-	addTemplateHTML();
+	var templateTaskHTML = templateTask(newTask.attributes);
+		$('.newTasksList').append(templateTaskHTML);
 //save newTask to server URL
 	newTask.save().done( function () {
 		console.log('Task was saved to the server.');
 	});
-//display array in HTML
-	// var newTaskHTML = template(allTasks);
-	// newTaskArea.html(newTasksHTML);
+
 });
 
 
+//TOGGLE NEW
 
-//TOGGLE COMPLETE
-$('.newTasksList').on('click','li', function(event) {
-//change task status to Completed
-	event.preventDefault();	
+$('.newTasksList').on('click', function(event) {
+	event.preventDefault();
+//Grab the ID of the clicked <li>
 	var thisTask = event.target;
-	var thisTaskID = Number(thisTask.id);
-
-	var thisTaskInstance = _.findWhere(newTasks.task, { id: thisTaskID });
-
-	thisTaskInstance.toggleStatus();
-
-	$(thisTask).removeClass().addClass(thisTaskInstance.status);
-
-	var detachNewTask = $(thisTask).detach();
-	var appendCompletedTask = $('.completedTasksList').append(detachNewTask);
-});
-
-//TOGGLE NEW 
-$('.completedTasksList').on('click','li div', function(event) {
-//change task status to Completed
-	event.preventDefault();	
-	var thisTask = event.target;
-	var thisTaskID = Number(thisTask.id);
-
-	var thisTaskInstance = _.findWhere(newTasks.task, { id: thisTaskID });
-
-	thisTaskInstance.toggleStatus();
-
-	$(thisTask).removeClass().addClass(thisTaskInstance.status);
-
+	var thisTaskID = thisTask.id;
+//In the Collection, find where the id === the clicked task ID
+	var thisTaskInstance = _.findWhere(allTasks.models, { id: thisTaskID});
+//Change the status of matching ID to completed.
+	thisTaskInstance.set({ status: 'completed'} );
+//Add the new class "completed" to the HTML element
+	$(thisTask).removeClass().addClass(thisTaskInstance.attributes.status);
+//Detach it from New Task List and add it to Completed Task List
 	var detachCompletedTask = $(thisTask).detach();
-	var appendCompletedTask = $('.newTasksList').append(detachCompletedTask);
+	var appendCompletedTask = $('.completedTasksList').append(detachCompletedTask);
+});
 
+
+//TOGGLE COMPLETED
+
+$('.completedTasksList').on('click', function(event) {
+	event.preventDefault();
+//Grab the ID of the clicked <li>
+	var thisTask = event.target;
+	var thisTaskID = thisTask.id;
+//In the Collection, find where the id === the clicked task ID
+	var thisTaskInstance = _.findWhere(allTasks.models, { id: thisTaskID});
+//Change the status of matching ID to completed.
+	thisTaskInstance.set({ status: 'open'} );
+//Add the new class "completed" to the HTML element
+	$(thisTask).removeClass().addClass(thisTaskInstance.attributes.status);
+//Detach it from New Task List and add it to Completed Task List
+	var detachCompletedTask = $(thisTask).detach();
+	var appendCompletedTask = $('.newTasksList').prepend(detachCompletedTask);
 });
 
 

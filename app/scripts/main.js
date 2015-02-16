@@ -122,4 +122,40 @@ $('.completedTasksList').on('click', function(event) {
 });
 
 
+//DELETE TASK
+
+$('.deleteButton').on('click', function(event) {
+	event.preventDefault();
+//Grab the ID of the clicked <li>
+	var thisTask = event.target;
+	var thisTaskID = thisTask.id;
+
+	console.log(thisTask);
+	console.log(thisTaskID);
+//In the Collection, find where the id === the clicked task ID
+// 	var thisTaskInstance = _.findWhere(allTasks.models, { id: thisTaskID});
+// //Change the status of matching ID to completed.
+// 	thisTaskInstance.set({ status: 'open'} );
+// //Add the new class "completed" to the HTML element
+// 	$(thisTask).removeClass().addClass(thisTaskInstance.attributes.status);
+// //Detach it from New Task List and add it to Completed Task List
+// 	var detachCompletedTask = $(thisTask).detach();
+// 	var appendCompletedTask = $('.newTasksList').prepend(detachCompletedTask);
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
